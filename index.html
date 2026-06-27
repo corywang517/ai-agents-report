@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔥 2026 AI Agent 全景报告</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --card-bg: rgba(16, 16, 30, 0.85);
+    --border: rgba(100, 200, 255, 0.15);
+    --accent: #00d4ff;
+    --accent2: #a855f7;
+    --accent3: #22d3ee;
+    --text: #c8d6e5;
+    --text-muted: #6b7d95;
+    --heading: #e8f0f8;
+    --glow: 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background:
+      linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+    animation: gridMove 20s linear infinite;
+  }
+  @keyframes gridMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 60px 60px; }
+  }
+
+  /* Floating particles */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background:
+      radial-gradient(2px 2px at 20% 30%, rgba(0, 212, 255, 0.5), transparent),
+      radial-gradient(2px 2px at 60% 70%, rgba(168, 85, 247, 0.5), transparent),
+      radial-gradient(1px 1px at 80% 20%, rgba(34, 211, 238, 0.5), transparent),
+      radial-gradient(2px 2px at 40% 60%, rgba(0, 212, 255, 0.4), transparent),
+      radial-gradient(1px 1px at 90% 90%, rgba(168, 85, 247, 0.4), transparent);
+    z-index: 0;
+    animation: floatParticles 15s ease-in-out infinite;
+  }
+  @keyframes floatParticles {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    padding: 60px 0 40px;
+  }
+  .header .badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+  }
+  .header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .header .subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+  .header .meta-line {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .header .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  .header .meta-item span {
+    color: var(--accent);
+  }
+
+  /* ── Nav cards ── */
+  .toc {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    margin-bottom: 50px;
+  }
+  .toc a {
+    display: block;
+    padding: 16px 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.25s;
+    backdrop-filter: blur(10px);
+  }
+  .toc a:hover {
+    border-color: var(--accent);
+    box-shadow: var(--glow);
+    transform: translateY(-2px);
+    color: var(--accent);
+  }
+
+  /* ── Section ── */
+  .section {
+    margin-bottom: 50px;
+  }
+  .section h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--heading);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid;
+    border-image: linear-gradient(90deg, var(--accent), transparent) 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section h2 .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #0a0a0f;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  }
+  .card p { margin-bottom: 14px; }
+  .card p:last-child { margin-bottom: 0; }
+
+  .highlight-box {
+    background: rgba(0, 212, 255, 0.06);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 0 12px 12px 0;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .highlight-box strong {
+    color: var(--accent);
+  }
+
+  /* ── Tables ── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead {
+    background: rgba(0, 212, 255, 0.08);
+  }
+  th {
+    padding: 14px 16px;
+    text-align: left;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  td {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:hover td {
+    background: rgba(0, 212, 255, 0.03);
+  }
+  td a {
+    color: var(--accent3);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  td a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  /* ── Tag ── */
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin: 0 2px;
+  }
+  .tag.blue { background: rgba(0,212,255,0.15); color: var(--accent); }
+  .tag.purple { background: rgba(168,85,247,0.15); color: var(--accent2); }
+  .tag.green { background: rgba(34,211,238,0.15); color: var(--accent3); }
+  .tag.gold { background: rgba(250,204,21,0.15); color: #facc15; }
+
+  /* ── Link cards ── */
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    background: rgba(16,16,30,0.7);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.25s;
+    backdrop-filter: blur(6px);
+  }
+  .link-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--glow);
+    color: var(--accent);
+  }
+  .link-card .icon { font-size: 18px; flex-shrink: 0; }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 40px 0 20px;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  .footer .glow-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    margin: 0 6px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .header h1 { font-size: 2rem; }
+    .toc { grid-template-columns: 1fr 1fr; }
+    .links-grid { grid-template-columns: 1fr; }
+    .card { padding: 20px; }
+  }
+  @media (max-width: 480px) {
+    .header h1 { font-size: 1.6rem; }
+    .toc { grid-template-columns: 1fr; }
+    th, td { padding: 10px 8px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ════════ HEADER ════════ -->
+  <header class="header">
+    <div class="badge">⚡ AGENT LANDSCAPE</div>
+    <h1>2026 AI Agent 全景报告</h1>
+    <p class="subtitle">框架 · 产品 · 协议 — 一次看全</p>
+    <div class="meta-line">
+      <div class="meta-item">📅 <span>2026.06.27</span></div>
+      <div class="meta-item">✍️ <span>豆子 · Hermes Agent</span></div>
+      <div class="meta-item">📊 <span>8 框架 · 8 产品 · 3 协议</span></div>
+    </div>
+  </header>
+
+  <!-- ════════ NAV ════════ -->
+  <nav class="toc">
+    <a href="#bg">📡 一、2026 背景信号</a>
+    <a href="#frameworks">🧩 二、Agent 框架对比</a>
+    <a href="#products">💻 三、AI Coding Agent 产品</a>
+    <a href="#protocols">🔗 四、协议层</a>
+    <a href="#advice">🎯 五、选型速查</a>
+    <a href="#trends">📈 六、关键趋势</a>
+    <a href="#links">🔖 七、参考链接</a>
+  </nav>
+
+  <!-- ════════ SECTION 1: BG ════════ -->
+  <div class="section" id="bg">
+    <h2><span class="num">一</span> 背景：2026，Agent 不再只是 Demo</h2>
+    <div class="card">
+      <p>如果 2025 年是 Agent 的概念验证年，那 2026 年就是 <strong style="color:var(--accent)">工程化和生产化</strong> 的元年。</p>
+      <div class="highlight-box">
+        <strong>💡 关键信号：</strong><br>
+        • 微软、Google、Anthropic、OpenAI <strong>全部</strong>推出 Agent 框架/SDK<br>
+        • CrewAI 突破 <strong>52,000+ GitHub Star</strong>，过去 12 个月执行 <strong>~20 亿次</strong> Agent 任务<br>
+        • MCP 协议已有 <strong>200+</strong> 服务器实现<br>
+        • MIT 研究：仅 <strong>5%</strong> 企业 AI 从试点走到生产——<strong>框架选型就是生死线</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ SECTION 2: FRAMEWORKS ════════ -->
+  <div class="section" id="frameworks">
+    <h2><span class="num">二</span> Agent 框架分类对比</h2>
+    <div class="card">
+      <p>2026 年的 Agent 框架分为两大阵营：<span class="tag blue">厂商原生 SDK</span> 深度绑定单一模型；<span class="tag purple">独立框架</span> 跨模型灵活。</p>
+
+      <h3 style="color:var(--accent);margin:24px 0 14px;font-size:1.1rem;">A. 厂商原生 SDK</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>框架</th><th>厂商</th><th>语言</th><th>亮点</th><th>链接</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Claude Agent SDK</strong></td>
+              <td>Anthropic</td>
+              <td>Python, TS</td>
+              <td>代码 Agent · OS 访问 · MCP 最深度支持</td>
+              <td><a href="https://code.claude.com/docs/en/agent-sdk/overview" target="_blank">官网 →</a></td>
+            </tr>
+            <tr>
+              <td><strong>OpenAI Agents SDK</strong></td>
+              <td>OpenAI</td>
+              <td>Python, TS</td>
+              <td>轻量 Handoff 链 · 快速搭建</td>
+              <td><a href="https://developers.openai.com/api/docs/guides/agents" target="_blank">官网 →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Google ADK</strong></td>
+              <td>Google</td>
+              <td><span class="tag green">4 语言</span> Python/TS/Java/Go</td>
+              <td>唯一四语言 SDK · 企业多语言团队首选</td>
+              <td><a href="https://adk.dev" target="_blank">官网 →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Microsoft Agent Framework 1.0</strong></td>
+              <td>微软</td>
+              <td>.NET, Python</td>
+              <td>AutoGen + Semantic Kernel 统一 · 2026.4.3 GA</td>
+              <td><a href="https://github.com/microsoft/agent-framework" target="_blank">GitHub →</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="color:var(--accent2);margin:28px 0 14px;font-size:1.1rem;">B. 独立框架</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>框架</th><th>语言</th><th>定位</th><th>GitHub</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>LangGraph</strong></td>
+              <td>Python, TS</td>
+              <td>图状态引擎 · Klarna/Cisco 在用 · 节省 40-50% LLM 调用</td>
+              <td><a href="https://github.com/langchain-ai/langgraph" target="_blank">GitHub →</a></td>
+            </tr>
+            <tr>
+              <td><strong>CrewAI</strong> <span class="tag gold">⭐ 52.4K</span></td>
+              <td>Python</td>
+              <td>角色扮演多 Agent · 快速原型 · 20 亿次执行</td>
+              <td><a href="https://github.com/crewAIInc/crewAI" target="_blank">GitHub →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Smolagents</strong></td>
+              <td>Python</td>
+              <td>HuggingFace 出品 · 代码生成型 Agent</td>
+              <td><a href="https://github.com/huggingface/smolagents" target="_blank">GitHub →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Pydantic AI</strong></td>
+              <td>Python</td>
+              <td>Python 原生 · 类型安全 · 结构化输出</td>
+              <td><a href="https://github.com/pydantic/pydantic-ai" target="_blank">GitHub →</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ SECTION 3: PRODUCTS ════════ -->
+  <div class="section" id="products">
+    <h2><span class="num">三</span> 2026 热门 AI Coding Agent 产品</h2>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>产品</th><th>类型</th><th>开发商</th><th>官网</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Devin</strong></td>
+              <td>自主软件工程师</td>
+              <td>Cognition AI</td>
+              <td><a href="https://www.cognition.ai" target="_blank">cognition.ai →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Windsurf</strong></td>
+              <td>Agentic IDE（VS Code）</td>
+              <td>Cognition AI</td>
+              <td><a href="https://windsurf.com" target="_blank">windsurf.com →</a></td>
+            </tr>
+            <tr>
+              <td><strong>GitHub Copilot</strong></td>
+              <td>编辑器内 AI</td>
+              <td>GitHub / Microsoft</td>
+              <td><a href="https://github.com/features/copilot" target="_blank">github.com →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Cursor</strong></td>
+              <td>AI 代码编辑器</td>
+              <td>Anysphere</td>
+              <td><a href="https://cursor.com" target="_blank">cursor.com →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Claude Code</strong></td>
+              <td>CLI 编程 Agent</td>
+              <td>Anthropic</td>
+              <td><a href="https://code.claude.com" target="_blank">code.claude.com →</a></td>
+            </tr>
+            <tr>
+              <td><strong>OpenAI Codex CLI</strong></td>
+              <td>CLI 编程 Agent</td>
+              <td>OpenAI</td>
+              <td><a href="https://github.com/openai/codex" target="_blank">GitHub →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Atoms</strong></td>
+              <td>多 Agent 团队</td>
+              <td>—</td>
+              <td><a href="https://atoms.io" target="_blank">atoms.io →</a></td>
+            </tr>
+            <tr>
+              <td><strong>Manus AI</strong></td>
+              <td>通用自主 Agent</td>
+              <td>Manus（中国）</td>
+              <td><a href="https://manus.im" target="_blank">manus.im →</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ SECTION 4: PROTOCOLS ════════ -->
+  <div class="section" id="protocols">
+    <h2><span class="num">四</span> 协议层：Agent 互操作的基建</h2>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>协议</th><th>发起方</th><th>状态</th><th>简介</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>MCP</strong></td>
+              <td>Anthropic</td>
+              <td><span class="tag green">200+ 服务器</span></td>
+              <td>Model Context Protocol — LLM ↔ 工具连接标准</td>
+            </tr>
+            <tr>
+              <td><strong>A2A</strong></td>
+              <td>Google</td>
+              <td><span class="tag blue">Linux 基金会</span></td>
+              <td>Agent-to-Agent — 多 Agent 通信协议</td>
+            </tr>
+            <tr>
+              <td><strong>ACP</strong></td>
+              <td>—</td>
+              <td><span class="tag purple">已并入 A2A</span></td>
+              <td>原 Agent Communication Protocol</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ SECTION 5: ADVICE ════════ -->
+  <div class="section" id="advice">
+    <h2><span class="num">五</span> 选型速查</h2>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>场景</th><th>推荐</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>复杂有状态工作流（多步、回溯）</td><td><span class="tag blue">LangGraph</span></td></tr>
+            <tr><td>快速原型 · 多 Agent 角色扮演</td><td><span class="tag gold">CrewAI</span></td></tr>
+            <tr><td>深度 Claude 模型集成</td><td><span class="tag blue">Claude Agent SDK</span></td></tr>
+            <tr><td>深度 OpenAI 模型集成</td><td><span class="tag green">OpenAI Agents SDK</span></td></tr>
+            <tr><td>企业多语言团队（Java/Go）</td><td><span class="tag purple">Google ADK</span></td></tr>
+            <tr><td>.NET 技术栈</td><td><span class="tag purple">Microsoft Agent Framework</span></td></tr>
+            <tr><td>代码生成型 Agent</td><td><span class="tag green">Smolagents</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ SECTION 6: TRENDS ════════ -->
+  <div class="section" id="trends">
+    <h2><span class="num">六</span> 五大关键趋势</h2>
+    <div class="card">
+      <div class="highlight-box"><strong>1. Agent 下沉到 IDE 和 CLI</strong> — 不再是"用 Agent"，而是 Agent 就是编辑器/终端本身</div>
+      <div class="highlight-box"><strong>2. 多 Agent 协作成标配</strong> — CrewAI、Atoms 推动"Agent 团队"模式，分工协作</div>
+      <div class="highlight-box"><strong>3. 协议标准化加速</strong> — MCP + A2A 让不同厂商的 Agent 能互操作</div>
+      <div class="highlight-box"><strong>4. 从"会写代码"到"会干活"</strong> — Agent 不只是对话，真正执行任务、操作环境</div>
+      <div class="highlight-box"><strong>5. 成本优化成核心</strong> — LangGraph 通过状态管理节省 40-50% LLM 调用</div>
+    </div>
+  </div>
+
+  <!-- ════════ SECTION 7: LINKS ════════ -->
+  <div class="section" id="links">
+    <h2><span class="num">七</span> 参考链接</h2>
+    <div class="links-grid">
+      <a class="link-card" href="https://www.morphllm.com/ai-agent-framework" target="_blank">
+        <span class="icon">📊</span> MorphLLM: 8 SDKs Compared (2026)
+      </a>
+      <a class="link-card" href="https://fungies.io/ai-agent-frameworks-2026/" target="_blank">
+        <span class="icon">🏆</span> 7 Best AI Agent Frameworks 2026
+      </a>
+      <a class="link-card" href="https://www.datacamp.com/blog/best-ai-agents" target="_blank">
+        <span class="icon">📚</span> DataCamp: Best AI Agents 2026
+      </a>
+      <a class="link-card" href="https://www.marktechpost.com/2026/06/10/ai-coding-agents-development-platforms-2026/" target="_blank">
+        <span class="icon">💻</span> AI Coding Agents 2026 对比
+      </a>
+      <a class="link-card" href="https://claude.com/blog/building-agents-with-the-claude-agent-sdk" target="_blank">
+        <span class="icon">🧠</span> 用 Claude Agent SDK 构建 Agent
+      </a>
+      <a class="link-card" href="https://openai.com/index/the-next-evolution-of-the-agents-sdk/" target="_blank">
+        <span class="icon">🔮</span> OpenAI Agents SDK 演进
+      </a>
+      <a class="link-card" href="https://adk.dev" target="_blank">
+        <span class="icon">🔧</span> Google ADK 官方
+      </a>
+      <a class="link-card" href="https://manus.im" target="_blank">
+        <span class="icon">🤖</span> Manus AI
+      </a>
+    </div>
+  </div>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer class="footer">
+    <p><span class="glow-dot"></span> 由 豆子 (Hermes Agent) 自动生成 · 2026.06.27 <span class="glow-dot"></span></p>
+    <p style="margin-top:6px;font-size:12px;">Powered by deepseek-v4-pro · 数据来源 DuckDuckGo + 行业公开资料</p>
+  </footer>
+</div>
+</body>
+</html>
